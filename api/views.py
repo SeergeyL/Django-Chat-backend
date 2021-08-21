@@ -155,6 +155,7 @@ class MessageAPIView(ListAPIView):
 
 
 class MessageDetailAPIView(DestroyAPIView):
+    serializer_class = serializers.MessageSerializer
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
