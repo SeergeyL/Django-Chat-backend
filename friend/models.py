@@ -34,6 +34,7 @@ class FriendManager(models.Manager):
 
         if self.are_friends(user, friend):
             Friend.objects.get(user=user).friends.remove(friend)
+            Friend.objects.get(user=friend).friends.remove(user)
         else:
             raise ValidationError('This user is not in your friend list')
 
