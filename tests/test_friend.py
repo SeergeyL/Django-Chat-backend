@@ -65,12 +65,21 @@ def test_are_friends(user1, user2):
 
     status = Friend.friend_objects.are_friends(user1, user2)
 
-    assert status, "Пользователь в списке друзей, но отображается неверный статус"
+    assert status, "Пользователь в списке друзей, неверный статус"
 
     status = Friend.friend_objects.are_friends(user2, user1)
 
-    assert status, "Пользователь в списке друзей, но отображается неверный статус"
+    assert status, "Пользователь в списке друзей, неверный статус"
 
+    Friend.friend_objects.delete_friend(user1, user2)
+
+    status = Friend.friend_objects.are_friends(user1, user2)
+
+    assert not status, "Пользователя нет в спике друзей, неверный статус"
+
+    status = Friend.friend_objects.are_friends(user2, user1)
+
+    assert not status, "Пользователя нет в спике друзей, неверный статус"
 
 
 
