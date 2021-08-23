@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 from django.contrib.auth import get_user_model
@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-5mp1=^xt9#5t50_@@4$6ftbg^_73^q0_f%1vqw$d!#ggp)1#i)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -82,11 +82,13 @@ TEMPLATES = [
 
 ASGI_APPLICATION = 'django_chat.asgi.application'
 
-# InMemoryChannelLayer is usesd for testing needs
-# Change to Redis in production
+# REDIS
 CHANNEL_LAYERS = {
     'default': {
-        "BACKEND": "channels.layers.InMemoryChannelLayer"
+        'BACKEND': 'channels.layers.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [('redis', 6379)]
+        }
     },
 }
 
@@ -98,8 +100,12 @@ WSGI_APPLICATION = 'django_chat.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': os.environ.get('DB_ENGINE'),
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT')
     }
 }
 
