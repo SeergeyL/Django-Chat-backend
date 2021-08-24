@@ -1,0 +1,358 @@
+openapi: 3.0.2
+info:
+  title: 'Chat API'
+  version: '1.0.0'
+paths:
+  /api/v1/me/:
+    get:
+      operationId: listUserInfos
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/users/:
+    get:
+      operationId: listUsers
+      description: Return the list of registered users
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/dialogs/:
+    get:
+      operationId: listDialogs
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dialog'
+          description: ''
+      tags:
+      - api
+  /api/v1/dialogs/{dialog_id}/messages/:
+    get:
+      operationId: listMessages
+      description: ''
+      parameters:
+      - name: dialog_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Message'
+          description: ''
+      tags:
+      - api
+  /api/v1/me/friends/:
+    get:
+      operationId: listFriendViewSets
+      description: Return list of all friends
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+    post:
+      operationId: createFriendViewSet
+      description: Create friend request to user
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/me/friend_requests/:
+    get:
+      operationId: listFriendRequestViewSets
+      description: Return all outcoming friend requests from user
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/me/friend_requests/{id}/accept/:
+    get:
+      operationId: acceptFriendRequestFriendRequestViewSet
+      description: Incoming friend requests
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/me/friend_requests/{id}/reject/:
+    get:
+      operationId: rejectFriendRequestFriendRequestViewSet
+      description: Incoming friend requests
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/me/sent_friend_requests/:
+    get:
+      operationId: listSentFriendRequestViewSets
+      description: Return all outcoming friend requests from user
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/me/sent_friend_requests/{id}/reject/:
+    get:
+      operationId: rejectFriendRequestSentFriendRequestViewSet
+      description: Outcoming friend requests
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - api
+  /api/v1/register/:
+    post:
+      operationId: createUser
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserCreate'
+          description: ''
+      tags:
+      - api
+  /api/v1/api-token-auth/:
+    post:
+      operationId: createAuthToken
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthToken'
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthToken'
+          description: ''
+      tags:
+      - api
+  /api/v1/dialogs/{dialog_id}/messages/{message_id}/:
+    delete:
+      operationId: destroyMessage
+      description: ''
+      parameters:
+      - name: dialog_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      - name: message_id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+  /api/v1/me/friends/{id}/:
+    delete:
+      operationId: destroyFriendViewSet
+      description: Delete friend from the list
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ''
+        schema:
+          type: string
+      responses:
+        '204':
+          description: ''
+      tags:
+      - api
+components:
+  schemas:
+    Dialog:
+      type: object
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+          readOnly: true
+        friend:
+          type: string
+          readOnly: true
+        active:
+          type: boolean
+        last_message:
+          type: string
+          readOnly: true
+    Message:
+      type: object
+      properties:
+        pk:
+          type: integer
+          readOnly: true
+        author:
+          type: string
+          readOnly: true
+        message:
+          type: string
+          maxLength: 600
+        time:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - message
+    UserCreate:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+\z
+          maxLength: 150
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          writeOnly: true
+        password2:
+          type: string
+          writeOnly: true
+      required:
+      - username
+      - email
+      - password
+      - password2
+    AuthToken:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        token:
+          type: string
+          readOnly: true
+      required:
+      - username
+      - password
